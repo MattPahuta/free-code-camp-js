@@ -5,6 +5,73 @@
 // *** Intermediate Algorithm Scripting *** //
 // **************************************** //
 
+
+function sum(arr, n) {
+  if (n <= 0) {
+    return 0;
+  } else {
+    return sum(arr, n - 1) + arr[n - 1];
+  }
+}
+
+// *** Pig Latin 
+/*
+
+
+Pig Latin is a way of altering English Words. The rules are as follows:
+- If a word begins with a consonant, take the first consonant or consonant cluster, move it to the end of the word, and add ay to it.
+- If a word begins with a vowel, just add way at the end.
+
+Translate string to Pig Latin. Input words are English and all in lowercase
+
+*/
+function translatePigLatin(str) {
+  
+}
+
+
+// *** Spinal Tap Case 
+// * Using a Regular Expression *
+/*
+Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.
+Examples:
+spinalCase("This Is Spinal Tap") => 'this-is-spinal-tap'
+spinalCase("thisIsSpinalTap") => 'this-is-spinal-tap'
+spinalCase("Teletubbies say Eh-oh") => 'teletubbies-say-eh-oh'
+*/
+function spinalCase(str) {
+
+  // ** Solution 3
+  return str
+  // split the string at on of the following conditions: 
+  // whitespace char [\s], underscore char [_], followed by an uppercase letter [?=[A-Z]]
+    .split(/\s|_|(?=[A-Z])/)
+    .join("-") // join with '-'
+    .toLowerCase(); // make it all lowercase
+
+
+  // ** Solution 2
+  // Replace low-upper case to low-space-uppercase
+  str = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+  // Split on whitespace and underscores and join with dash
+  return str
+    .toLowerCase()
+    .split(/(?:_| )+/)
+    .join("-");
+
+
+
+  // ** Solution 1
+  // RegEx for white space and underscores
+  const regex = /\s+|_+/g;
+  // put a space before any encountered uppercase characters
+  str = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+  // replace space and underscore with '-'
+  return str.replace(regex, '-').toLowerCase();
+
+}
+
+
 // *** Wherefore art thou
 // *** (Find matching Objects in an array of objects)
 /*
