@@ -5,8 +5,95 @@
 // *** Intermediate Algorithm Scripting *** //
 // **************************************** //
 
-function factorializeIt(n) {
-  return n <= 1 ? 1 : n * factorialize(n - 1);
+
+// *** Sorted Union 
+/*
+Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+
+In other words, all values present from all arrays should be included in their original order, but with no duplicates in the final array.
+
+The unique numbers should be sorted by their original order, but the final array should not be sorted in numerical order.
+
+Check the assertion tests for examples.
+
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]) should return [1, 3, 2, 5, 4].
+uniteUnique([1, 2, 3], [5, 2, 1]) should return [1, 2, 3, 5].
+uniteUnique([1, 2, 3], [5, 2, 1, 4], [2, 1], [6, 7, 8]) should return [1, 2, 3, 5, 4, 6, 7, 8].
+uniteUnique([1, 3, 2], [5, 4], [5, 6]) should return [1, 3, 2, 5, 4, 6].
+uniteUnique([1, 3, 2, 3], [5, 2, 1, 4], [2, 1]) should return [1, 3, 2, 5, 4].
+
+** get unique values from an array
+var myArray = ['a', 1, 'a', 2, '1'];
+var unique = myArray.filter((value, index, array) => array.indexOf(value) === index)
+
+or:
+let unique = [...new Set(myArray)]
+
+*/
+function uniteUnique(...arr) {
+  // accept multiple arrays 
+  // sort each array
+
+  // with filter, ...arguments, flat, indexOf
+  return [...arguments].flat().filter((item, i, arr) => {
+    return arr.indexOf(item) === i;
+  })
+
+
+  // with ...new, Set, and flat()
+  return [...new Set(arr.flat())];
+
+  // with a for loops, arguments, indexOf, and push
+  const finalArr = [];
+
+  for (let i = 0; i < arguments.length; i++) {
+    const arrayArguments = arguments[i]; // get each individual arr within array of arrays
+    // loop through the sub arrays
+    for (let j = 0; j < arrayArguments.length; j++) {
+      let indexVal = arrayArguments[j];
+      // check if the value is already on the final array
+      if (finalArr.indexOf(indexVal) < 0) {
+        finalArr.push(indexVal);
+      }
+    }
+  }
+  return finalArr;
+}
+
+
+// *** Missing letters
+/*
+Find the missing letter in the passed letter range and return it.
+
+If all letters are present in the range, return undefined.
+
+*/
+function fearNotLetter(str) {
+  // const alpha = "abcdefghijklmnopqrstuvwxyz";
+
+  // with split, forEach, charCodeAt, and String.fromCharCode
+  let currentCode = str.charCodeAt(0);
+  let missing = undefined;
+
+  str.split('').forEach(letter => {
+    if (letter.charCodeAt(0) === currentCode) {
+      currentCode += 1;
+    } else {
+      missing = String.fromCharCode(currentCode);
+    }
+  });
+  
+  return missing;
+
+  // with a for loop, conditional, charCodeAt and String.fromCharCode
+  for (let i = 0; i < str.length; i++) {
+    const charCode = str.charCodeAt(i); // code of current char
+    console.log('char code: ', charCode)
+    if (charCode !== str.charCodeAt(0) + i) {
+      return String.fromCharCode(charCode - 1);
+    }
+  }
+  return undefined;
 }
 
 
