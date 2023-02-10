@@ -6,6 +6,56 @@
 // **************************************** //
 
 
+// *** Sum all Odd Fibonacci Numbers 
+/*
+Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num.
+
+The first two numbers in the Fibonacci sequence are 1 and 1. Every additional number in the sequence is the sum of the two previous numbers. The first six numbers of the Fibonacci sequence are 1, 1, 2, 3, 5 and 8.
+
+For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than or equal to 10 are 1, 1, 3, and 5.
+*/
+function sumFibs(num) {
+
+}
+
+
+
+// *** Convert HTML Entities 
+/*
+Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
+*/
+function convertHTML(str) {
+
+  const entities = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&apos;',
+    '"': '&quot;'
+  }
+  // with entities key object, split, map, and join
+  return str
+    .split('')
+    .map(entity => entities[entity] || entity)
+    .join('');
+
+
+  // with entities key object, split, for...of loops, Object.entries, push, join
+  const strArr = str.split('');
+  const result = [];
+
+  for (let char of strArr) {
+    for (const [key, value] of Object.entries(entities)) {
+      if (char === key) {
+        char = value;
+      }
+    }
+    result.push(char)
+  }
+  return result.join('')
+}
+
+
 // *** Sorted Union 
 /*
 Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
