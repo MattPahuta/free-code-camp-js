@@ -15,7 +15,39 @@ The first two numbers in the Fibonacci sequence are 1 and 1. Every additional nu
 For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than or equal to 10 are 1, 1, 3, and 5.
 */
 function sumFibs(num) {
+  // accept a num
+  // generate a list of fibonacci nums <= num
+  // get the odd finonacci nums, return thier sum 
 
+  // *** With a while loop
+  // let prevNumber = 0;
+  // let currNumber = 1;
+  // let result = 0;
+  // while (currNumber <= num) {
+  //   if (currNumber % 2 !== 0) {
+  //     result += currNumber;
+  //   }
+  //   currNumber += prevNumber;
+  //   prevNumber = currNumber - prevNumber;
+  // }
+  // return result;
+
+
+  // *** with while loop, unshift, filter, and reduce
+  if (num <= 0) return 0; // validity check on input
+  const arrFib = [1,1];
+  let nextFib = 0;
+  // put new fib nums in front so don't need to calc array length each iteration
+  while ((nextFib = arrFib[0] + arrFib[1]) <= num) {
+    // console.log(nextFib)
+    // console.log(arrFib)
+    arrFib.unshift(nextFib);
+  }
+  // filter array to get odd nums, reduce for sum
+  return arrFib.filter(num => num % 2 !== 0).reduce((a,b) => a + b);
+
+
+ 
 }
 
 
