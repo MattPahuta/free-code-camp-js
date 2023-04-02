@@ -5,6 +5,53 @@
 // *** Intermediate Algorithm Scripting *** //
 // **************************************** //
 
+// *** Binary Agents
+/*
+Return an English translated sentence of the passed binary string.
+
+The binary string will be space separated.
+*/
+function binaryAgent(str) {
+
+  // with split, map, parseInt, String.fromCharCode, join
+  const binaryArr = str.split(' ');
+  return binaryArr.map(binaryStr => {
+    return parseInt(binaryStr, 2)
+  }).map(dec => String.fromCharCode(dec)).join('')
+
+}
+
+
+// *** Steamroller
+/*
+Flatten a nested array. You must account for varying levels of nesting.
+*/
+function steamrollArray(arr) {
+
+  // with concat, some, Array.isArray, recursion, ternary
+  // spead the elements of arr into a new array
+  const flat = [].concat(...arr);
+  // use some to find out if the new array still has arrays
+  // if so, use recursion to call steamrollArray and pass in new array
+  // or, return the new flat array
+  return flat.some(Array.isArray) ? steamrollArray(flat) : flat;
+
+  // with for loop, Array.isArray, spread syntax, and push, recursion
+  const flattenedArray = [];
+  // Loop over array contents
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      // Recursively flatten entries that are arrays
+      //  and push into the flattenedArray
+      flattenedArray.push(...steamrollArray(arr[i]));
+    } else {
+      // Copy contents that are not arrays
+      flattenedArray.push(arr[i]);
+    }
+  }
+  return flattenedArray;
+}
+
 // *** Drop it
 /*
 Given the array arr, iterate through and remove each element starting from the first element (the 0 index) until the function func returns true when the iterated element is passed through it.
