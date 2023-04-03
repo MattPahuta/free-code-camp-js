@@ -5,6 +5,55 @@
 // *** Intermediate Algorithm Scripting *** //
 // **************************************** //
 
+// *** Everything Be True
+/*
+Check if the predicate (second argument) is truthy on all elements of a collection (first argument).
+
+In other words, you are given an array collection of objects. The predicate pre will be an object property and you need to return true if its value is truthy. Otherwise, return false.
+
+In JavaScript, truthy values are values that translate to true when evaluated in a Boolean context.
+
+Remember, you can access object properties through either dot notation or [] notation.
+
+truthCheck([{name: "Quincy", role: "Founder", isBot: false}, {name: "Naomi", role: "", isBot: false}, {name: "Camperbot", role: "Bot", isBot: true}], "isBot") // => false.
+*/
+function truthCheck(collection, pre) {
+
+  // use every method with hasOwnProperty and Boolean
+  return collection.every(obj => {
+    return obj.hasOwnProperty(pre) && Boolean(obj[pre]);
+  });
+
+  // more concise of above
+  return collection.every(obj => obj[pre]);
+
+
+  // with for...in loop, hasOwnProperty, and Boolean
+  let counter = 0; // keep track of number of true values
+  for (let obj in collection) {
+    // if obj has the property and value is truthy
+    if (collection[obj].hasOwnProperty(pre) && Boolean(collection[obj][pre])) {
+      counter += 1;
+    }
+  }
+  // counter === collection.length?
+  return counter === collection.length;
+
+  // with map, for loop, and Boolean
+  const newArr = collection.map(obj => obj[pre])
+  for (let i = 0; i < newArr.length; i++) {
+    if (Boolean(newArr[i]) === false) {
+      return false;
+    }
+  }
+  return true;
+
+
+
+
+}
+
+
 // *** Binary Agents
 /*
 Return an English translated sentence of the passed binary string.
