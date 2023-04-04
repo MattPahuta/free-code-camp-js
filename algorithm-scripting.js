@@ -5,7 +5,171 @@
 // *** Intermediate Algorithm Scripting *** //
 // **************************************** //
 
+// *** Mat the Debris 
+/*
+According to Kepler's Third Law, the orbital period T
+
+Return a new array that transforms the elements' average altitude into their orbital periods (in seconds).
+
+The array will contain objects in the format {name: 'name', avgAlt: avgAlt}.
+
+The values should be rounded to the nearest whole number. The body being orbited is Earth.
+
+The radius of the earth is 6367.4447 kilometers, and the GM value of earth is 398600.4418 km3s-2.
+*/
+function orbitalPeriod(arr) {
+  const GM = 398600.4418;
+  const earthRadius = 6367.4447;
+
+  const a = 2 * Math.PI;
+  const newArr = [];
+
+  const getOrbPeriod = function(obj) {
+    const c = Math.pow(earthRadius + obj.avgAlt, 3);
+    const b = Math.sqrt(c / GM);
+    const orbPeriod = Math.round(a * b);
+    return { name: obj.name, orbitalPeriod: orbPeriod };
+  }
+
+  for (let el in arr) {
+    newArr.push(getOrbPeriod(arr[el]));
+  }
+
+  return newArr;
+}
+
+
+// *** Make a Person - Object constructor
+/*
+Fill in the object constructor with the following methods below:
+
+getFirstName()
+getLastName()
+getFullName()
+
+setFirstName(first)
+setLastName(last)
+setFullName(firstAndLast)
+
+Run the tests to see the expected output for each method. The methods that take an argument must accept only one argument and it has to be a string. These methods must be the only available means of interacting with the object.
+
+*/
+const Person = function(firstAndLast) {
+  // Only change code below this line
+  let fullName = firstAndLast;
+  // Complete the method below and implement the others similarly
+  this.getFullName = function() {
+    return fullName;
+  };
+  this.getFirstName = function() {
+    return fullName.split(' ')[0];
+  };
+  this.getLastName = function() {
+    return fullName.split(' ')[1];
+  }
+  this.setFirstName = function(name) {
+    fullName = name + " " + fullName.split(' ')[1];   
+  }
+  this.setLastName = function(name) {
+    fullName = fullName.split(' ')[0] + " " + name;
+  }
+  this.setFullName = function(name) {
+    fullName = name;
+  }
+  return firstAndLast;
+};
+
+const bob = new Person('Bob Ross');
+bob.getFullName();
+
+
+// *** Arguments Optional 
+/*
+Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum.
+
+For example, addTogether(2, 3) should return 5, and addTogether(2) should return a function.
+
+Calling this returned function with a single argument will then return the sum:
+
+var sumTwoAnd = addTogether(2);
+
+sumTwoAnd(3) returns 5.
+
+If either argument isn't a valid number, return undefined.
+
+*/
+function addTogether() {
+  // add two numbers passed as parameters, return sum
+  // check if any of the nums are actual numbers, otherwise return undefined
+  // check if one or two arguments are passed in, more are ignored
+  // If only one argument then return a function that uses that number and expects another, then add it
+
+  const [first, second] = arguments;
+  // First argument is not a number
+  if (typeof(first) !== "number") {
+    return undefined;
+  }
+  // First argument is a number
+  //  and second argument is not defined
+  else if (arguments.length === 1) {
+    function addSecond(second) {
+      // New argument is not a number
+      if (typeof(second) !== "number") {
+        return undefined;
+      }
+      // New argument is a number
+      else {
+        return first + second;
+      }
+    }
+    // Note: returning a *function*
+    return addSecond;
+  }
+  // First argument is a number
+  //  and second argument is not a number
+  else if (typeof(second) !== "number") {
+    return undefined;
+  }
+  // First argument is a number
+  //  and second argument is a number
+  else {
+    return first + second;
+  }
+
+
+  // *** streamlined of above
+  // const [first, second] = arguments;
+  // if (typeof(first) !== 'number') {
+  //   return undefined;
+  // }
+  // if (arguments.length === 1) {
+  //   return (second) => addTogether(first, second);
+  // }
+  // if (typeof(second) !== 'number') {
+  //   return undefined;
+  // }
+  // return first + second;
+ 
+
+}
+
+function addTogether2(...args) {
+  const [first, second] = args;
+  if (args.length === 1 && typeof first === 'number') {
+    return num => {
+      if (typeof num === 'number') {
+        return first + num;
+      }
+    }
+  }
+  if (typeof first === 'number' && typeof second === 'number') {
+    return first + second;
+  }
+}
+
+
 // *** Everything Be True
+// *** Array of Objects
 /*
 Check if the predicate (second argument) is truthy on all elements of a collection (first argument).
 
